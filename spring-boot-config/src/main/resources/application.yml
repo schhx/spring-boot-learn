@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: SPRING-BOOT-CONFIG
+  profiles:
+    active: dev
+server:
+  port: 8090
+
