@@ -1,0 +1,13 @@
+
+multi-datasource:
+  user:
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_learn?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&autoReconnect=true&useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+  account:
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_learn_2?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&autoReconnect=true&useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+
