@@ -13,6 +13,7 @@
         <module>spring-boot-helloworld</module>
         <module>spring-boot-config</module>
         <module>spring-boot-log</module>
+        <module>spring-boot-mybatis</module>
     </modules>
 
 
