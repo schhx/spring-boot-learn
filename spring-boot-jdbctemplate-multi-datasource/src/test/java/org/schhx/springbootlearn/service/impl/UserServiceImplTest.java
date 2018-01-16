@@ -29,11 +29,6 @@ public class UserServiceImplTest {
     @Test
     @Transactional
     public void delete() throws Exception {
-        User user = userService.create("张三", 20);
-        Assert.assertNotEquals(null, user);
-        userService.delete(user.getId());
-        user = userService.getById(user.getId());
-        Assert.assertEquals(null, user);
     }
 
     @Test
