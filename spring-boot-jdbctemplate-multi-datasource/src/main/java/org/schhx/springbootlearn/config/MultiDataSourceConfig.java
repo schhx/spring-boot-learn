@@ -22,12 +22,14 @@ public class MultiDataSourceConfig {
     }
 
     @Bean(name = "userJdbcTemplate")
+    @Primary
     public JdbcTemplate userJdbcTemplate(
             @Qualifier("userDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
     @Bean(name = "userTransactionManager")
+    @Primary
     public DataSourceTransactionManager userTransactionManager(@Qualifier("userDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
