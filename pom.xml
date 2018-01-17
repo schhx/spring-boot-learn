@@ -19,6 +19,7 @@
         <module>spring-boot-mybatis-multi-datasource</module>
         <module>spring-boot-jdbctemplate-multi-datasource</module>
         <module>spring-boot-jpa-multi-datasource</module>
+        <module>spring-boot-redis</module>
     </modules>
 
 

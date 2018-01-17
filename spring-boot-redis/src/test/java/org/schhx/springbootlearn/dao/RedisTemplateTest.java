@@ -1,46 +1,48 @@
 package org.schhx.springbootlearn.dao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.schhx.springbootlearn.module.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RedisDaoTest {
+public class RedisTemplateTest {
 
     @Autowired
-    RedisDao redisDao;
+    StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Test
     public void save() throws Exception {
         String key = UUID.randomUUID().toString();
         String value = UUID.randomUUID().toString();
-        redisDao.save(key, value)
-                .expire(key, 5, TimeUnit.SECONDS);
-        Assert.assertEquals(value, redisDao.getValue(key));
+        stringRedisTemplate.opsForValue().set(key, value);
+        stringRedisTemplate.expire(key, 5, TimeUnit.SECONDS);
+        Assert.assertEquals(value, stringRedisTemplate.opsForValue().get(key));
         Thread.sleep(5000);
-        Assert.assertEquals(null, redisDao.getValue(key));
+        Assert.assertEquals(null, stringRedisTemplate.opsForValue().get(key));
     }
 
     @Test
     public void saveObject() throws Exception {
         String key = UUID.randomUUID().toString();
         User user = new User().setName("张三").setAge(20);
-        redisDao.saveObject(key, user)
-                .expire(key, 5, TimeUnit.SECONDS);
-        Assert.assertEquals(user, redisDao.getObjectValue(key, User.class));
+        redisTemplate.opsForValue().set(key, user);
+        redisTemplate.expire(key, 5, TimeUnit.SECONDS);
+        Assert.assertEquals(user, redisTemplate.opsForValue().get(key));
         Thread.sleep(5000);
-        Assert.assertEquals(null, redisDao.getValue(key));
+        Assert.assertEquals(null, redisTemplate.opsForValue().get(key));
     }
 
 }

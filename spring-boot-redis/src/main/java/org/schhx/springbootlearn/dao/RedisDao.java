@@ -21,15 +21,16 @@ public class RedisDao {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void save(String key, String value){
+    public RedisDao save(String key, String value){
         try {
             redisTemplate.opsForValue().set(key, value);
         } catch (RedisConnectionFailureException e){
             throw new RuntimeException("缓存连接失败", e);
         }
+        return this;
     }
 
-    public void saveObject(String key, Object o){
+    public RedisDao saveObject(String key, Object o){
         try {
             String value = objectMapper.writeValueAsString(o);
             save(key, value);
@@ -38,6 +39,7 @@ public class RedisDao {
         } catch (RedisConnectionFailureException e){
             throw new RuntimeException("缓存连接失败", e);
         }
+        return this;
     }
 
     public String getValue(String key){
