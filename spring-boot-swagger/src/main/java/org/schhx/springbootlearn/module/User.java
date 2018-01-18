@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class User {
 
-    private Long id;
+    private String id;
 
     @ApiModelProperty(required = true, value = "年龄")
     private Long age;

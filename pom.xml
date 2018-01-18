@@ -21,6 +21,7 @@
         <module>spring-boot-jpa-multi-datasource</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-swagger</module>
+        <module>spring-boot-exception-handler</module>
     </modules>
 
 
