@@ -2,11 +2,10 @@ package org.schhx.springbootlearn.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.schhx.springbootlearn.exception.BaseException;
-import org.schhx.springbootlearn.vo.ResultVO;
+import org.schhx.springbootlearn.vo.ErrorVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -30,18 +29,18 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public ResultVO handleBindException(BindException e) {
+    public ErrorVO handleBindException(BindException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         String errorMsg = errorFieldToString(fieldErrors);
-        return ResultVO.error(errorMsg);
+        return ErrorVO.of(errorMsg);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResultVO handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ErrorVO handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         String errorMsg = errorFieldToString(fieldErrors);
-        return ResultVO.error(errorMsg);
+        return ErrorVO.of(errorMsg);
     }
 
     private String errorFieldToString(List<FieldError> fieldErrors) {
@@ -54,14 +53,14 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResultVO handleConstraintViolationException(ConstraintViolationException e) {
+    public ErrorVO handleConstraintViolationException(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> set = e.getConstraintViolations();
         StringJoiner stringJoiner = new StringJoiner(";");
         for (ConstraintViolation constraintViolation : set) {
             stringJoiner.add(constraintViolation.getMessage());
         }
         String errorMsg = stringJoiner.toString();
-        return ResultVO.error(errorMsg);
+        return ErrorVO.of(errorMsg);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -70,32 +69,32 @@ public class GlobalExceptionHandler {
             HttpMessageNotReadableException.class, HttpRequestMethodNotSupportedException.class,
             MissingServletRequestParameterException.class
     })
-    public ResultVO handleException(Exception e) {
+    public ErrorVO handleException(Exception e) {
         if (e instanceof NoHandlerFoundException) {
-            return ResultVO.error("请求路由不存在", e.getMessage());
+            return ErrorVO.of("请求路由不存在", e.getMessage());
         } else if (e instanceof MissingPathVariableException) {
-            return ResultVO.error("缺少路径参数", e.getMessage());
+            return ErrorVO.of("缺少路径参数", e.getMessage());
         } else if (e instanceof HttpMessageNotReadableException) {
-            return ResultVO.error("请输入正确的参数", e.getMessage());
+            return ErrorVO.of("请输入正确的参数", e.getMessage());
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            return ResultVO.error("HTTP请求方法错误", e.getMessage());
+            return ErrorVO.of("HTTP请求方法错误", e.getMessage());
         } else if(e instanceof MissingServletRequestParameterException){
-            return ResultVO.error("缺少必填参数", e.getMessage());
+            return ErrorVO.of("缺少必填参数", e.getMessage());
         }
-        return ResultVO.error(e.getMessage(), e.getMessage());
+        return ErrorVO.of(e.getMessage(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BaseException.class)
-    public ResultVO handleException(BaseException e) {
-        return ResultVO.error(e.getMessage());
+    public ErrorVO handleException(BaseException e) {
+        return ErrorVO.of(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ResultVO handleException(HttpServletRequest request, Exception e) {
+    public ErrorVO handleException(HttpServletRequest request, Exception e) {
         logError(request, e);
-        return ResultVO.error("未知异常", e.getMessage());
+        return ErrorVO.of("未知异常", e.getMessage());
     }
 
     private void logError(HttpServletRequest request, Exception e) {

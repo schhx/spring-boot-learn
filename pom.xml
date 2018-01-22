@@ -22,6 +22,7 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-swagger</module>
         <module>spring-boot-exception-handler</module>
+        <module>spring-boot-validation</module>
     </modules>
 
 
