@@ -3,8 +3,10 @@ package org.schhx.springbootlearn.exception.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.schhx.springbootlearn.exception.BaseException;
 import org.schhx.springbootlearn.vo.ErrorVO;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -18,20 +20,23 @@ import java.util.function.Supplier;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ErrorVO handleException(NoHandlerFoundException e){
-        return new ErrorVO("请求路由不存在");
+        return ErrorVO.of("请求路由不存在", e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BaseException.class)
     public ErrorVO handleException(BaseException e){
-        return new ErrorVO(e.getMessage());
+        return ErrorVO.of(e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ErrorVO handleException(HttpServletRequest request, Exception e){
         logError(request, e);
-        return new ErrorVO("未知异常");
+        return ErrorVO.of("未知异常", e.getMessage());
     }
 
     private void logError(HttpServletRequest request, Exception e) {

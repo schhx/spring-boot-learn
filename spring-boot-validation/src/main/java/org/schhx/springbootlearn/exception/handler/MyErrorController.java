@@ -1,6 +1,6 @@
 package org.schhx.springbootlearn.exception.handler;
 
-import org.schhx.springbootlearn.vo.ErrorVO;
+import org.schhx.springbootlearn.vo.ResultVO;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,7 @@ public class MyErrorController implements ErrorController {
     }
 
     @RequestMapping("/error")
-    public ErrorVO error(){
-        return ErrorVO.of("兜底");
+    public ResultVO error(){
+        return ResultVO.error("兜底");
     }
 }
