@@ -1,8 +1,10 @@
 spring:
-  application:
-    name: SPRING-BOOT-CONFIG
   profiles:
     active: dev
 server:
   port: 8090
 
+someone:
+  name: 张三
+  age: 20
+  best-friend: 李四

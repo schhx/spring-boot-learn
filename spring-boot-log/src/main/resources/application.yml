@@ -1,2 +1,5 @@
-logging:
-  path: ~/log/spring-boot-log
+#logging:
+#  level:
+#    org.schhx.springbootlearn: debug #指定日志级别
+#  pattern:
+#    console: "%d %-5level - %msg%n" #日志输出格式

@@ -1,7 +1,2 @@
 server:
   port: 8083
-
-someone:
-  name: 张三
-  age: 20
-  best-friend: 李四
