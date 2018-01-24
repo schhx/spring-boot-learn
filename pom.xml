@@ -25,6 +25,7 @@
         <module>spring-boot-validation</module>
         <module>spring-boot-webmvc</module>
         <module>spring-boot-aop</module>
+        <module>spring-boot-schedule</module>
     </modules>
 
 
