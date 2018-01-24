@@ -23,20 +23,16 @@ public class LogAspect {
 
     @Around("log()")
     public Object logAroundAllMethods(ProceedingJoinPoint pjp) throws Throwable {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        String token = request.getHeader("token");
-
         long begin = System.currentTimeMillis();
-        String handler = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
+        String handler = pjp.getSignature().toString();
         Object[] args = pjp.getArgs();
         try {
-            log.info("begin invoke handler: {}, args: {}, token: {}", handler, args, token);
+            log.info("begin invoke handler: {}, args: {}", handler, args);
             Object response = pjp.proceed();
-            log.info("end invoke handler: {}, args: {}, token: {}, response: {}, cost: {}ms", handler, args, token, "ok", System.currentTimeMillis() - begin);
+            log.info("end invoke handler: {}, args: {}, response: {}, cost: {}ms", handler, args, "ok", System.currentTimeMillis() - begin);
             return response;
         } catch (Throwable e) {
-            log.info("end invoke handler: {}, args: {}, token: {}, response with error :{} ,cost:{}", handler, args, token, e.getMessage(), System.currentTimeMillis() - begin);
+            log.info("end invoke handler: {}, args: {}, response with error :{} ,cost:{}", handler, args, e.getMessage(), System.currentTimeMillis() - begin);
             throw e;
         }
     }
