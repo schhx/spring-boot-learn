@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+    <!--驱动-->
     <classPathEntry
             location="/usr/local/maven/maven3.3.9/repository/mysql/mysql-connector-java/5.1.8/mysql-connector-java-5.1.8.jar"/>
     <context id="mysqlTables" targetRuntime="MyBatis3">
@@ -11,6 +12,7 @@
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
+        <!--数据库连接-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/spring_boot_learn"
                         userId="root" password="root"/>
@@ -41,6 +43,7 @@
             <property name="useActualColumnNames" value="true"/>
         </table>
 
+        <!--不想使用Example可使用下面的配置-->
         <!--<table tableName="user" domainObjectName="User"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
