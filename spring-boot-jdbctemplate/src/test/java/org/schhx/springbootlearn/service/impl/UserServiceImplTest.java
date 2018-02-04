@@ -9,14 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceImplTest {
 
+//    @Autowired
+//    private UserServiceJdbcTemplateImpl userService;
+
     @Autowired
-    private UserServiceImpl userService;
+    private UserServiceNamedParamterJdbcTemplateImpl userService;
 
     @Test
     @Transactional
@@ -37,7 +40,25 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getById() throws Exception {
+    @Transactional
+    public void update() throws Exception {
+        User user = userService.create("张三", 20);
+        System.out.println(user);
+        Assert.assertNotEquals(null, user);
+        user = userService.update(user.getId(), "李四", 30);
+        System.out.println(user);
+        Assert.assertEquals("李四", user.getUsername());
+    }
+
+    @Test
+    @Transactional
+    public void getUsersByAge() throws Exception {
+        for(int i=0; i<10; i++){
+            userService.create("username" + i, 14);
+        }
+
+        List<User> users = userService.getUsersByAge(14);
+        Assert.assertTrue(users.size() >= 10);
     }
 
 }
