@@ -11,3 +11,5 @@ spring:
       max-wait: 60000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    default-executor-type: reuse

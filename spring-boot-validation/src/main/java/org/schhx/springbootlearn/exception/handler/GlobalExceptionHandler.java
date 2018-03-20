@@ -86,7 +86,10 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BaseException.class)
-    public ErrorVO handleException(BaseException e) {
+    public ErrorVO handleException(HttpServletRequest request, BaseException e) {
+        if(e.isNeedLog()){
+            logError(request, e);
+        }
         return ErrorVO.of(e.getMessage());
     }
 

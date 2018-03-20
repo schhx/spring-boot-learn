@@ -22,19 +22,22 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ErrorVO handleException(NoHandlerFoundException e){
+    public ErrorVO handleException(NoHandlerFoundException e) {
         return ErrorVO.of("请求路由不存在", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BaseException.class)
-    public ErrorVO handleException(BaseException e){
+    public ErrorVO handleException(HttpServletRequest request, BaseException e) {
+        if (e.isNeedLog()) {
+            logError(request, e);
+        }
         return ErrorVO.of(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ErrorVO handleException(HttpServletRequest request, Exception e){
+    public ErrorVO handleException(HttpServletRequest request, Exception e) {
         logError(request, e);
         return ErrorVO.of("未知异常", e.getMessage());
     }

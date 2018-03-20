@@ -7,6 +7,8 @@ import org.schhx.springbootlearn.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +54,23 @@ public class UserRepositoryTest {
         List<User> result = userRepository.findAll(Example.of(new User().setUsername("张三")));
         System.out.println(result);
         Assert.assertNotEquals(null, result);
+    }
+
+    @Test
+    @Transactional
+    public void page() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            userRepository.save(
+                    new User().
+                            setId(UUID.randomUUID().toString())
+                            .setUsername("张三")
+                            .setAge(20)
+            );
+        }
+
+        PageRequest pageRequest = new PageRequest(1, 5);
+        Page<User> userPage = userRepository.findAll(pageRequest);
+        System.out.println(userPage.getTotalElements());
+        System.out.println(userPage.getSize());
     }
 }
