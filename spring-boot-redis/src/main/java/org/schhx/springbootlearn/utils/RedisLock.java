@@ -41,9 +41,7 @@ public class RedisLock {
         if (set) {
             redisTemplate.expire(key, second, TimeUnit.SECONDS);
         } else {
-            //如果已存在这个key,尝试获取这个key
             String value = redisTemplate.opsForValue().getAndSet(key, System.currentTimeMillis() + second * 1000 + "");
-            //已经过了这个key的超时时间60秒还存在 则删除这个key 防止没有expire执行导致永久锁
             if (value != null && Long.parseLong(value) + 1 <= System.currentTimeMillis()) {
                 return true;
             }

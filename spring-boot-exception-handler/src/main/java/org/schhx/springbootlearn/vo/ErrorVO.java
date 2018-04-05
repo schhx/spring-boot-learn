@@ -1,5 +1,6 @@
 package org.schhx.springbootlearn.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -7,19 +8,20 @@ public class ErrorVO {
 
     private String error;
 
-    private String original_error;
+    @JsonProperty("original_error")
+    private String originalError;
 
-    private ErrorVO(String error, String original_error) {
+    private ErrorVO(String error, String originalError) {
         this.error = error;
-        this.original_error = original_error;
+        this.originalError = originalError;
     }
 
     public static ErrorVO of(String error) {
         return new ErrorVO(error, error);
     }
 
-    public static ErrorVO of(String error, String original_error) {
-        return new ErrorVO(error, original_error);
+    public static ErrorVO of(String error, String originalError) {
+        return new ErrorVO(error, originalError);
     }
 
 }

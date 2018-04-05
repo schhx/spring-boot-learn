@@ -1,5 +1,6 @@
 package org.schhx.springbootlearn.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,6 @@ public class RedisDao {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     public RedisDao save(String key, String value){
         try {
             redisTemplate.opsForValue().set(key, value);
@@ -32,10 +30,8 @@ public class RedisDao {
 
     public RedisDao saveObject(String key, Object o){
         try {
-            String value = objectMapper.writeValueAsString(o);
+            String value = JSON.toJSONString(o);
             save(key, value);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("数据转换失败", e);
         } catch (RedisConnectionFailureException e){
             throw new RuntimeException("缓存连接失败", e);
         }
@@ -51,15 +47,11 @@ public class RedisDao {
     }
 
     public <T> T getObjectValue(String key, Class<T> clazz){
-        try {
-            String value = getValue(key);
-            if(value == null){
-                return null;
-            }
-            return objectMapper.readValue(value, clazz);
-        } catch (IOException e) {
-            throw new RuntimeException("数据转换失败", e);
+        String value = getValue(key);
+        if(value == null){
+            return null;
         }
+        return JSON.parseObject(value, clazz);
     }
 
     public void expireAt(String key, Date date){
