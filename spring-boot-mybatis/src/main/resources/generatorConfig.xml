@@ -7,7 +7,12 @@
     <!--驱动-->
     <classPathEntry
             location="/usr/local/maven/maven3.3.9/repository/mysql/mysql-connector-java/5.1.8/mysql-connector-java-5.1.8.jar"/>
-    <context id="mysqlTables" targetRuntime="MyBatis3">
+    <context id="mysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
         <!--去除注释  -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
@@ -39,8 +44,8 @@
         </javaClientGenerator>
 
         <!-- 自动生成数据库表的对应关系  -->
-        <table tableName="user" domainObjectName="User">
-            <property name="useActualColumnNames" value="true"/>
+        <table tableName="sms_config" domainObjectName="SmsConfig">
+            <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
 
         <!--不想使用Example可使用下面的配置-->

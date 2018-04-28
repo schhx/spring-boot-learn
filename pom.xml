@@ -27,6 +27,8 @@
         <module>spring-boot-aop</module>
         <module>spring-boot-schedule</module>
         <module>spring-boot-cache</module>
+        <module>spring-boot-mybatis-annotation</module>
+        <module>spring-boot-mybatis-mapper</module>
     </modules>
 
 

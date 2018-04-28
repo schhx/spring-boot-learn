@@ -6,7 +6,12 @@
 <generatorConfiguration>
     <classPathEntry
             location="/usr/local/maven/maven3.3.9/repository/mysql/mysql-connector-java/5.1.8/mysql-connector-java-5.1.8.jar"/>
-    <context id="mysqlTables" targetRuntime="MyBatis3">
+    <context id="mysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
         <!--去除注释  -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
