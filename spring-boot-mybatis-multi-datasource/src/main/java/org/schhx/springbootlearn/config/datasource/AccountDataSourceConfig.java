@@ -1,5 +1,6 @@
 package org.schhx.springbootlearn.config.datasource;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,10 +20,10 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "org.schhx.springbootlearn.dao.account", sqlSessionTemplateRef  = "accountSqlSessionTemplate")
 public class AccountDataSourceConfig {
 
-    @Bean(name = "accountDataSource")
-    @ConfigurationProperties(prefix = "multi-datasource.account")
-    public DataSource accountDataSource() {
-        return DataSourceBuilder.create().build();
+    @Bean("accountDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.account")
+    public DataSource accountDataSource(){
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "accountSqlSessionFactory")

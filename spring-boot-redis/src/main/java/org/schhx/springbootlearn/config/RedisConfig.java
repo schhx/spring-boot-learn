@@ -1,18 +1,18 @@
 package org.schhx.springbootlearn.config;
 
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * @author shanchao
+ * @date 2018-08-28
+ */
 @Configuration
-@EnableCaching
-public class RedisCacheConfig {
+public class RedisConfig {
 
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -25,13 +25,5 @@ public class RedisCacheConfig {
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         redisTemplate.setHashValueSerializer(jsonRedisSerializer);
         return redisTemplate;
-    }
-
-    @Bean
-    public CacheManager redisCacheManager(RedisTemplate redisTemplate){
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
-        redisCacheManager.setDefaultExpiration(10L);
-        redisCacheManager.setUsePrefix(true);
-        return redisCacheManager;
     }
 }
