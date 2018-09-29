@@ -1,4 +1,4 @@
-package org.schhx.springbootlearn.config;
+package org.schhx.springbootlearn.bean;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "someone")
 @Component
 @Data
-public class SomeoneProperties {
+public class Someone {
 
     private String name;
 
