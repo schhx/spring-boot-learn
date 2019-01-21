@@ -13,3 +13,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     default-executor-type: reuse
+    default-statement-timeout: 2

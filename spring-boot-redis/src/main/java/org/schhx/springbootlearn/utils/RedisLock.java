@@ -20,8 +20,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisLock {
 
-    private static final String LOCK_KEY_PREFIX = "lock.";
-
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
 
     @Autowired
@@ -36,7 +34,6 @@ public class RedisLock {
      * @see <a href="http://redis.io/commands/setnx">Redis Documentation: SETNX</a>
      */
     public boolean lock(String key, long second) {
-        key = LOCK_KEY_PREFIX + key;
         Boolean set = redisTemplate.opsForValue().setIfAbsent(key, System.currentTimeMillis() + second * 1000 + "");
         if (set) {
             redisTemplate.expire(key, second, TimeUnit.SECONDS);
@@ -60,12 +57,11 @@ public class RedisLock {
      * @see <a href="http://redis.io/commands/set">Redis Documentation: SET</a>
      */
     public boolean lock(final String key, final String value, long timeout, TimeUnit timeUnit) {
-        final String lockKey = LOCK_KEY_PREFIX + key;
         redisTemplate.execute((RedisCallback<Object>) connection -> {
-            connection.set(lockKey.getBytes(), value.getBytes(), Expiration.from(timeout, timeUnit), RedisStringCommands.SetOption.SET_IF_ABSENT);
+            connection.set(key.getBytes(), value.getBytes(), Expiration.from(timeout, timeUnit), RedisStringCommands.SetOption.SET_IF_ABSENT);
             return null;
         });
-        String lockValue = redisTemplate.opsForValue().get(lockKey);
+        String lockValue = redisTemplate.opsForValue().get(key);
         return value.equals(lockValue);
     }
 
@@ -76,7 +72,7 @@ public class RedisLock {
      * @param value
      */
     public void unlock(String key, String value) {
-        unlock(key, value, 0, TimeUnit.MILLISECONDS);
+        doUnlock(key, value);
     }
 
     /**
@@ -88,11 +84,10 @@ public class RedisLock {
      * @param unit
      */
     public void unlock(final String key, final String value, long delayTime, TimeUnit unit) {
-        final String lockKey = LOCK_KEY_PREFIX + key;
         if (delayTime <= 0) {
-            doUnlock(lockKey, value);
+            doUnlock(key, value);
         } else {
-            executorService.schedule(() -> doUnlock(lockKey, value), delayTime, unit);
+            executorService.schedule(() -> doUnlock(key, value), delayTime, unit);
         }
 
     }
