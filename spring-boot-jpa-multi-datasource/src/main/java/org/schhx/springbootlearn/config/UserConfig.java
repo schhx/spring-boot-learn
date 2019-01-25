@@ -2,6 +2,8 @@ package org.schhx.springbootlearn.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import javax.persistence.EntityManager;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Configuration
@@ -32,6 +35,9 @@ public class UserConfig {
     @Autowired
     private JpaProperties jpaProperties;
 
+    @Autowired
+    private HibernateProperties hibernateProperties;
+
     @Primary
     @Bean(name = "userEntityManager")
     public EntityManager userEntityManager(EntityManagerFactoryBuilder builder) {
@@ -43,7 +49,7 @@ public class UserConfig {
     public LocalContainerEntityManagerFactoryBean userEntityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(userDataSource)
-                .properties(getVendorProperties(userDataSource))
+                .properties(getVendorProperties())
                 .packages("org.schhx.springbootlearn.entity.user")
                 .persistenceUnit("userPersistenceUnit")
                 .build();
@@ -55,8 +61,11 @@ public class UserConfig {
         return new JpaTransactionManager(userEntityManagerFactory(builder).getObject());
     }
 
-    private Map<String, String> getVendorProperties(DataSource dataSource) {
-        return jpaProperties.getHibernateProperties(dataSource);
+    private Map<String, Object> getVendorProperties() {
+        return new LinkedHashMap<>(this.hibernateProperties.determineHibernateProperties(
+                jpaProperties.getProperties(),
+                new HibernateSettings())
+        );
     }
 
 }

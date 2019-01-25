@@ -4,3 +4,6 @@ spring:
     port: 6379
     password:
     database: 0
+  cache:
+    redis:
+      time-to-live: 60000 #单位ms

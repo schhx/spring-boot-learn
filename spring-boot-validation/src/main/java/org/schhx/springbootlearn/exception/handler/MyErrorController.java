@@ -1,7 +1,7 @@
 package org.schhx.springbootlearn.exception.handler;
 
 import org.schhx.springbootlearn.vo.ErrorVO;
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

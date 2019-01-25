@@ -19,3 +19,8 @@ spring:
         min-idle: 2
         max-active: 5
         max-wait: 60000
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+

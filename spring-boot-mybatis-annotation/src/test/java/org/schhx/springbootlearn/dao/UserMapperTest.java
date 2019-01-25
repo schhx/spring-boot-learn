@@ -21,7 +21,7 @@ public class UserMapperTest {
     private UserMapper userMapper;
 
     @Test
-//    @Transactional
+    @Transactional
     public void insert() throws Exception {
         User user = new User()
                 .setId(UUID.randomUUID().toString())
