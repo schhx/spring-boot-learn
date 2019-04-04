@@ -3,4 +3,18 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: mygroup
+    producer:
+      bootstrap-servers: host:port  # broker 地址列表
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: 1
+      buffer-memory:
+      compression-type:
+      retries:
+      batch-size: 1024
+      client-id:
+    listener:
+      concurrency:
+
+
       

@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123
+    virtual-host: test
+    listener:
+      type: simple
+      direct:
+        acknowledge-mode: auto
+        consumers-per-queue: 5
+      simple:
+        acknowledge-mode: none
+        concurrency: 5
+        max-concurrency: 5
+
+
+
