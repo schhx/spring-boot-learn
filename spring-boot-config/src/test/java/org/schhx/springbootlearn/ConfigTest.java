@@ -3,8 +3,8 @@ package org.schhx.springbootlearn;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.schhx.springbootlearn.bean.Someone;
-import org.schhx.springbootlearn.bean.Someone2;
 import org.schhx.springbootlearn.bean.Someone3;
+import org.schhx.springbootlearn.bean.Someone2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,10 +22,10 @@ public class ConfigTest {
     private Someone someoneProperties;
 
     @Autowired
-    private Someone2 someone2;
+    private Someone3 someone2;
 
     @Autowired
-    private Someone3 someone3;
+    private Someone2 someone3;
 
     @Value("${someone.name}")
     private String name;
@@ -48,11 +48,11 @@ public class ConfigTest {
         System.out.println(someoneProperties);
 
         System.out.println();
-        System.out.println("Properties from bean");
+        System.out.println("Properties from bean2");
         System.out.println(someone2);
 
         System.out.println();
-        System.out.println("Properties from bean");
+        System.out.println("Properties from bean3");
         System.out.println(someone3);
     }
 }

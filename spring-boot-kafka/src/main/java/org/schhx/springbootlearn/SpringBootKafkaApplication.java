@@ -12,7 +12,7 @@ public class SpringBootKafkaApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(SpringBootKafkaApplication.class, args);
 
 		KafkaSender sender = context.getBean(KafkaSender.class);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 30; i++) {
 			//调用消息发送类中的消息发送方法
 			sender.send();
 			try {

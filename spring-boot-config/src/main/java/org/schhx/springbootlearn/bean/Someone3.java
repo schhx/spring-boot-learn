@@ -1,10 +1,11 @@
 package org.schhx.springbootlearn.bean;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "someone")
+/**
+ * @author shanchao
+ * @date 2018-09-12
+ */
 @Data
 public class Someone3 {
 
@@ -13,4 +14,5 @@ public class Someone3 {
     private Integer age;
 
     private String bestFriend;
+
 }
