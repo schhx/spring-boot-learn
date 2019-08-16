@@ -2,11 +2,11 @@ package org.schhx.springbootlearn.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.NotBlank;
 import org.schhx.springbootlearn.group.Insert;
 import org.schhx.springbootlearn.group.Update;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 

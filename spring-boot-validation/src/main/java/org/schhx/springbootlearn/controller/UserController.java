@@ -1,6 +1,5 @@
 package org.schhx.springbootlearn.controller;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.schhx.springbootlearn.entity.User;
 import org.schhx.springbootlearn.group.Insert;
 import org.schhx.springbootlearn.group.Update;
@@ -12,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;

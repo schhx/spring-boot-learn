@@ -2,7 +2,8 @@ package org.schhx.springbootlearn.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Accessors(chain = true)

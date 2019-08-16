@@ -7,7 +7,6 @@ spring:
 #    hikari:
 #      minimum-idle: 2
 #      maximum-pool-size: 5
-#      max-lifetime: 60000
     druid:
       initial-size: 2
       min-idle: 2
