@@ -23,25 +23,25 @@ public class RedisLockTest {
 
     @Test
     public void lock() throws Exception {
-        boolean result = redisLock.lock(key, value, 10, TimeUnit.SECONDS);
+        boolean result = redisLock.lock(key, value, 10);
         Assert.assertTrue(result);
-        result = redisLock.lock(key, value, 10, TimeUnit.SECONDS);
+        result = redisLock.lock(key, value, 10);
         Assert.assertTrue(!result);
         Thread.sleep(10000);
-        result = redisLock.lock(key, value, 10, TimeUnit.SECONDS);
+        result = redisLock.lock(key, value, 10);
         Assert.assertTrue(result);
     }
 
     @Test
     public void unlock() throws Exception {
-        boolean result = redisLock.lock(key, value, 10, TimeUnit.SECONDS);
+        boolean result = redisLock.lock(key, value, 10);
         Assert.assertTrue(result);
-        result = redisLock.lock(key, value, 10, TimeUnit.SECONDS);
+        result = redisLock.lock(key, value, 10);
         Assert.assertTrue(!result);
         Assert.assertTrue(!redisLock.unlock(key, "xxx1"));
-        Assert.assertTrue(!redisLock.lock(key, value, 10, TimeUnit.SECONDS));
+        Assert.assertTrue(!redisLock.lock(key, value, 10));
         Assert.assertTrue(redisLock.unlock(key, value));
-        Assert.assertTrue(redisLock.lock(key, value, 10, TimeUnit.SECONDS));
+        Assert.assertTrue(redisLock.lock(key, value, 10));
     }
 
 }

@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.schhx.springbootlearn.bean.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Date;
 import java.util.UUID;
