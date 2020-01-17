@@ -29,6 +29,10 @@
         <module>spring-boot-cache</module>
         <module>spring-boot-mybatis-annotation</module>
         <module>spring-boot-mybatis-mapper</module>
+        <module>spring-boot-kafka</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-shiro</module>
+        <module>spring-boot-mybatis-masterslave-datasource</module>
     </modules>
 
 
